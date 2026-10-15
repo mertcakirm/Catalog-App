@@ -172,7 +172,7 @@ class _ExplorePageState extends State<ExplorePage> {
                     ),
                   )
                 : SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 110),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     sliver: SliverGrid(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -184,7 +184,6 @@ class _ExplorePageState extends State<ExplorePage> {
                       delegate: SliverChildBuilderDelegate((context, index) {
                         final category = _categories[index];
 
-                        // API'den gelen verinin yapısına göre slug ve name değerlerini güvenle alıyoruz
                         final String categoryName = category is Map
                             ? (category['name']?.toString() ?? '')
                             : category.toString();
@@ -225,7 +224,6 @@ class _ExplorePageState extends State<ExplorePage> {
                             child: InkWell(
                               borderRadius: BorderRadius.circular(20),
                               onTap: () {
-                                // Tıklandığında üst sınıfa doğrudan slug değerini ilet
                                 if (widget.onCategorySelected != null &&
                                     categorySlug.isNotEmpty) {
                                   widget.onCategorySelected!(categorySlug);
@@ -293,6 +291,22 @@ class _ExplorePageState extends State<ExplorePage> {
                       }, childCount: _categories.length),
                     ),
                   ),
+
+            // SAYFANIN EN ALTINDAKİ LOGO VE BOŞLUK
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 30, 16, 120),
+                child: Center(
+                  child: Opacity(
+                    opacity: 0.8,
+                    child: SizedBox(
+                      height: 100,
+                      child: Image.asset('assets/images/logo.png'),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
