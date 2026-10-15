@@ -1,7 +1,7 @@
 import 'dart:ui';
+
 import 'package:catalog/widgets/navigation.dart';
 import 'package:flutter/material.dart';
-import 'widgets/navigation.dart'; 
 
 void main() {
   runApp(const MyApp());
@@ -34,10 +34,27 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    const Center(child: Text('Keşfet', style: TextStyle(fontSize: 24, color: Colors.white))),
-    const Center(child: Text('Ürünler', style: TextStyle(fontSize: 24, color: Colors.white))),
-    const Center(child: Text('Liked', style: TextStyle(fontSize: 24, color: Colors.white))),
-    const Center(child: Text('Basket', style: TextStyle(fontSize: 24, color: Colors.white))),
+    const Center(
+      child: Text(
+        'Keşfet',
+        style: TextStyle(fontSize: 24, color: Colors.white),
+      ),
+    ),
+    const Center(
+      child: Text(
+        'Ürünler',
+        style: TextStyle(fontSize: 24, color: Colors.white),
+      ),
+    ),
+    const Center(
+      child: Text('Liked', style: TextStyle(fontSize: 24, color: Colors.white)),
+    ),
+    const Center(
+      child: Text(
+        'Basket',
+        style: TextStyle(fontSize: 24, color: Colors.white),
+      ),
+    ),
   ];
 
   @override
@@ -75,7 +92,7 @@ class _MainScreenState extends State<MainScreen> {
             filter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
             child: Container(color: Colors.transparent),
           ),
-          
+
           // Aktif Sayfa İçeriği
           _pages[_currentIndex],
         ],

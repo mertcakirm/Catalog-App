@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class NavigationIsland extends StatelessWidget {
@@ -22,13 +23,13 @@ class NavigationIsland extends StatelessWidget {
             borderRadius: BorderRadius.circular(36),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.25),
+                color: Colors.black.withValues(alpha: 0.25),
                 blurRadius: 25,
                 spreadRadius: 2,
                 offset: const Offset(0, 10),
               ),
               BoxShadow(
-                color: const Color(0xFF6C5CE7).withOpacity(0.15),
+                color: const Color(0xFF6C5CE7).withValues(alpha: 0.15),
                 blurRadius: 20,
                 spreadRadius: -5,
               ),
@@ -47,28 +48,45 @@ class NavigationIsland extends StatelessWidget {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          Colors.white.withOpacity(0.18),
-                          Colors.white.withOpacity(0.05),
+                          Colors.white.withValues(alpha: 0.18),
+                          Colors.white.withValues(alpha: 0.05),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(36),
                       border: Border.all(
                         width: 1.5,
-                        color: Colors.white.withOpacity(0.25),
+                        color: Colors.white.withValues(alpha: 0.25),
                       ),
                     ),
                   ),
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 0,
+                    vertical: 0,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Expanded(child: _buildNavItem(0, Icons.home, 'Keşfet')),
-                      Expanded(child: _buildNavItem(1, Icons.car_repair_rounded, 'Ürünler')),
-                      Expanded(child: _buildNavItem(2, Icons.favorite_rounded, 'Liked')),
-                      Expanded(child: _buildNavItem(3, Icons.shopping_basket_rounded, 'Basket')),
+                      Expanded(
+                        child: _buildNavItem(1, Icons.inventory_2, 'Ürünler'),
+                      ),
+                      Expanded(
+                        child: _buildNavItem(
+                          2,
+                          Icons.favorite_rounded,
+                          'Liked',
+                        ),
+                      ),
+                      Expanded(
+                        child: _buildNavItem(
+                          3,
+                          Icons.shopping_basket_rounded,
+                          'Basket',
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -91,10 +109,12 @@ class NavigationIsland extends StatelessWidget {
         curve: Curves.easeOutCubic,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: isSelected ? Colors.white.withOpacity(0.2) : const Color.fromARGB(0, 156, 135, 135),
+          color: isSelected
+              ? Colors.white.withValues(alpha: 0.2)
+              : const Color.fromARGB(0, 156, 135, 135),
           borderRadius: BorderRadius.circular(24),
           border: isSelected
-              ? Border.all(color: Colors.white.withOpacity(0.3), width: 1)
+              ? Border.all(color: Colors.white.withValues(alpha: 0.3), width: 1)
               : Border.all(color: Colors.transparent),
         ),
         child: Row(
