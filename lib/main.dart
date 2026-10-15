@@ -1,9 +1,14 @@
-import 'dart:ui';
-
-import 'package:catalog/widgets/navigation.dart';
+import 'package:catalog/services/favorites_service.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+import 'pages/explore_page.dart';
+import 'pages/liked_products_page.dart';
+import 'pages/products_page.dart';
+import 'widgets/navigation.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await FavoritesService.instance.init();
   runApp(const MyApp());
 }
 
@@ -32,80 +37,51 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-
-  final List<Widget> _pages = [
-    const Center(
-      child: Text(
-        'Keşfet',
-        style: TextStyle(fontSize: 24, color: Colors.white),
-      ),
-    ),
-    const Center(
-      child: Text(
-        'Ürünler',
-        style: TextStyle(fontSize: 24, color: Colors.white),
-      ),
-    ),
-    const Center(
-      child: Text('Liked', style: TextStyle(fontSize: 24, color: Colors.white)),
-    ),
-    const Center(
-      child: Text(
-        'Basket',
-        style: TextStyle(fontSize: 24, color: Colors.white),
-      ),
-    ),
-  ];
+  String? _selectedCategorySlug; // Keşfet'ten seçilen kategoriyi tutan değişken
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      body: Stack(
-        children: [
-          // Arka plan ışık efektleri
-          Positioned(
-            top: 150,
-            left: -50,
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.purpleAccent,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 100,
-            right: -50,
-            child: Container(
-              width: 220,
-              height: 220,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.cyanAccent,
-              ),
-            ),
-          ),
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
-            child: Container(color: Colors.transparent),
-          ),
-
-          // Aktif Sayfa İçeriği
-          _pages[_currentIndex],
-        ],
-      ),
-
-      // Ayrı dosyadan çağrılan Liquid Glass Navigation Bar
-      bottomNavigationBar: NavigationIsland(
-        currentIndex: _currentIndex,
-        onTap: (index) {
+    // Sayfaları her build esnasında güncel parametrelerle oluşturuyoruz
+    final List<Widget> pages = [
+      ExplorePage(
+        onCategorySelected: (slug) {
           setState(() {
-            _currentIndex = index;
+            _selectedCategorySlug = slug; // Kategoriyi kaydet
+            _currentIndex = 1; // Ürünler sayfasına (Index 1) geçiş yap
           });
         },
+      ),
+      ProductsPage(
+        initialCategory: _selectedCategorySlug, // Seçilen kategoriyi ürünler sayfasına gönder
+      ),
+      const LikedProductsPage(),
+    ];
+
+    return Scaffold(
+      backgroundColor: const Color(0xFF0F0F1A),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: IndexedStack(index: _currentIndex, children: pages),
+          ),
+
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: NavigationIsland(
+              currentIndex: _currentIndex,
+              onTap: (index) {
+                setState(() {
+                  _currentIndex = index;
+                  if (index == 1) {
+                    _selectedCategorySlug = null;
+                  }
+                });
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -77,14 +77,7 @@ class NavigationIsland extends StatelessWidget {
                         child: _buildNavItem(
                           2,
                           Icons.favorite_rounded,
-                          'Liked',
-                        ),
-                      ),
-                      Expanded(
-                        child: _buildNavItem(
-                          3,
-                          Icons.shopping_basket_rounded,
-                          'Basket',
+                          'Favoriler',
                         ),
                       ),
                     ],
